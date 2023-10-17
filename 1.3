@@ -1,0 +1,46 @@
+def hex_add(a, b):
+    num1 = int(a, 16)
+    num2 = int(b, 16)
+    result = num1 + num2
+    return "Addition: " + hex(result)[2:]
+
+def hex_sub(a, b):
+    num1 = int(a, 16)
+    num2 = int(b, 16)
+    result = num1 - num2
+    return "Subtraction: " + hex(result)[2:]
+
+def hex_mul(a, b):
+    num1 = int(a, 16)
+    num2 = int(b, 16)
+    result = num1 * num2
+    return "Multiplication: " + hex(result)[2:]
+
+def hex_div(a, b):
+    num1 = int(a, 16)
+    num2 = int(b, 16)
+    result = num1 // num2  # Цілочисельне ділення
+    return "Division: " + hex(result)[2:]
+
+def hex_mod(a, b):
+    num1 = int(a, 16)
+    num2 = int(b, 16)
+    result = num1 % num2
+    return "Modulus: " + hex(result)[2:]
+
+def hex_powmod(a, power, modulo):
+    num_a = int(a, 16)
+    num_power = int(power, 16)
+    num_modulo = int(modulo, 16)
+    result = pow(num_a, num_power, num_modulo)
+    return "Power Modulus: " + hex(result)[2:]
+
+# Тестові приклади
+a = "51bf608414ad5726a3c1bec098f77b1b54ffb2787f8d528a74c1d7fde6470ea4"
+b = "403db8ad88a3932a0b7e8189aed9eeffb8121dfac05c3512fdb396dd73f6331c"
+
+print(hex_add(a, b))
+print(hex_sub(a, b))
+print(hex_mul(a, b))
+print(hex_div(a, b))
+print(hex_mod(a, b))
