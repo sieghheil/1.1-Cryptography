@@ -1,0 +1,65 @@
+class MyBigInt:
+    def __init__(self):
+        self._value = 0
+
+    def setHex(self, hex_str):
+        self._value = int(hex_str, 16)
+
+    def getHex(self):
+        return hex(self._value)[2:]
+
+    def INV(self):
+        max_bits = self._value.bit_length()
+        mask = (1 << max_bits) - 1
+        self._value ^= mask
+
+    def shiftR(self, n):
+        self._value >>= n
+
+    def shiftL(self, n):
+        self._value <<= n
+
+    def __xor__(self, other):
+        result = MyBigInt()
+        result._value = self._value ^ other._value
+        return result
+
+    def __or__(self, other):
+        result = MyBigInt()
+        result._value = self._value | other._value
+        return result
+
+    def __and__(self, other):
+        result = MyBigInt()
+        result._value = self._value & other._value
+        return result
+
+def test():
+    numberA = MyBigInt()
+    numberB = MyBigInt()
+    numberA.setHex("e035c6cfa42609b998b883bc1699df885cef74e2b2cc372eb8fa7e7")
+    numberB.setHex("5072f028943e0fd5fab3273782de14b1011741bd0c5cd6ba6474330")
+
+    numberC = numberA.__xor__(numberB)
+    assert numberC.getHex() == "b04736e73018066c620ba48b9447cb395df8355fbe90e194dc8e4d7", f"XOR test failed. Got {numberC.getHex()}"
+
+    numberD = numberA.__or__(numberB)
+    assert numberD.getHex() == "f077f6efb43e0ffdfabba7bf96dfdfb95dff75ffbedcf7befcfe7f7", f"OR test failed. Got {numberD.getHex()}"
+
+    numberE = numberA.__and__(numberB)
+    assert numberE.getHex() == "4030c0088426099198b0033402981480000740a0004c162a2070320", f"AND test failed. Got {numberE.getHex()}"
+
+    numberA.shiftR(3)
+    assert numberA.getHex() == "1c06b8d9f484c1373317107782d33bf10b9dee9c565986e5d71f4fc", f"ShiftR test failed. Got {numberA.getHex()}"
+
+    numberB.shiftL(5)
+    assert numberB.getHex() == "a0e5e051287c1fabf5664e6f05bc2962022e837a18b9ad74c8e86600", f"ShiftL test failed. Got {numberB.getHex()}"
+
+    numberF = MyBigInt()
+    numberF.setHex("e035c6cfa42609b998b883bc1699df885cef74e2b2cc372eb8fa7e7")
+    numberF.INV()
+    assert numberF.getHex() == "1fca39305bd9f64667477c43e9662077a3108b1d4d33c8d14705818", f"INV test failed. Got {numberF.getHex()}"
+
+    print("All tests passed!")
+
+test()
