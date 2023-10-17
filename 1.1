@@ -1,0 +1,49 @@
+import Foundation
+
+struct BigInteger
+{
+    private var data: [UInt64] = []
+
+    // Ініціалізація за допомогою рядка у шістнадцятковій системі числення
+    mutating func setHex(_ hexString: String)
+    {
+        self.data = []
+        let chunkSize = 16
+        for i in stride(from: 0, to: hexString.count, by: chunkSize)
+        {
+            let startIndex = hexString.index(hexString.startIndex, offsetBy: i)
+            let endIndex = hexString.index(startIndex, offsetBy: chunkSize, limitedBy: hexString.endIndex) ?? hexString.endIndex
+            let substr = hexString[startIndex..<endIndex]
+            
+            if let num = UInt64(substr, radix: 16)
+            {
+                self.data.insert(num, at: 0)
+            }
+        }
+    }
+
+    // Повертаємо число у вигляді рядка у шістнадцятковій системі числення
+    func getHex() -> String
+    {
+        return self.data.map { String($0, radix: 16, uppercase: true) }.reversed().joined()
+    }
+}
+
+// Автоматичне тестування
+func testBigInteger()
+{
+    let testNumbers = ["1A3F4B6C8D", "ABCDE", "1234567890ABCDEF", "0", "FFFFFFFFFFFFFFFF", "A", "10", "FF", "100", "ABCDEF"]
+
+    for testNumber in testNumbers
+    {
+        var bigInt = BigInteger()
+        bigInt.setHex(testNumber)
+        let retrievedNumber = bigInt.getHex()
+        assert(retrievedNumber == testNumber, "Test failed for number: \(testNumber). Got: \(retrievedNumber)")
+        print("Test passed for number: \(testNumber)")
+    }
+
+    print("All tests completed!")
+}
+
+testBigInteger()
